@@ -7,6 +7,10 @@ if exists('b:current_syntax')
   finish
 endif
 
+
+syn match tomlOperator "=" display nextgroup=@tomlValue skipempty skipwhite
+hi def link tomlOperator Operator
+
 syn match tomlEscape /\\[btnfr"/\\]/ display contained
 syn match tomlEscape /\\u\x\{4}/ contained
 syn match tomlEscape /\\U\x\{8}/ contained
@@ -55,7 +59,7 @@ hi def link tomlKeyDq Identifier
 syn region tomlKeySq oneline start=/\v(^|[{,])\s*\zs'/ end=/'\ze\s*=/
 hi def link tomlKeySq Identifier
 
-syn region tomlTable oneline start=/^\s*\[[^\[]/ end=/\]/ contains=tomlKey,tomlKeyDq,tomlKeySq
+syn region tomlTable oneline start=/^\s*\[\zs[^\[]/ end=/\ze\]/ contains=tomlKey,tomlKeyDq,tomlKeySq
 hi def link tomlTable Title
 
 syn region tomlTableArray oneline start=/^\s*\[\[/ end=/\]\]/ contains=tomlKey,tomlKeyDq,tomlKeySq
@@ -74,3 +78,4 @@ hi def link tomlComment Comment
 syn sync minlines=500
 
 let b:current_syntax = 'toml'
+
